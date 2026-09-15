@@ -8,21 +8,22 @@ datasource db {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  sku         String   @unique
-  name        String
-  category    String
-  price       Int
-  oldPrice    Int?
-  stock       Int      @default(0)
-  images      String[]
-  description String   @default("")
-  attributes  Json     @default("{}")
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  sku               String   @unique
+  name              String
+  shortDescription  String   @default("")
+  description       String   @default("")
+  category          String
+  price             Int
+  oldPrice          Int?
+  stock             Int      @default(0)
+  images            String[]
+  attributes        Json     @default("{}")
+  active            Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-  orderItems  OrderItem[]
+  orderItems        OrderItem[]
 
   @@map("products")
 }
