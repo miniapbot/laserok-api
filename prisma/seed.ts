@@ -1,38 +1,38 @@
 import { PrismaClient } from "@prisma/client";
-
+/// <reference types="node" />
 const prisma = new PrismaClient();
 
 const products = [
   {
     sku: "LZR-000001",
-    name: "еревянный жетон",
-    shortDescription: "етон из берёзы с лазерной гравировкой",
-    description: "етон из берёзы с лазерной гравировкой. деально подходит для подарка, брелока или сувенира.",
-    category: "етоны",
+    name: "Деревянный жетон",
+    shortDescription: "Жетон из берёзы с лазерной гравировкой",
+    description: "Жетон из берёзы с лазерной гравировкой. Идеально подходит для подарка, брелока или сувенира.",
+    category: "Жетоны",
     price: 250,
     oldPrice: 300,
     stock: 15,
     images: ["/products/zheton-01.png"],
-    attributes: { материал: "ерёза", размер: "50 мм", толщина: "4 мм" },
+    attributes: { материал: "Берёза", размер: "50 мм", толщина: "4 мм" },
     active: true,
   },
   {
     sku: "LZR-000002",
     name: "Шкатулка",
-    shortDescription: "еревянная шкатулка с гравировкой под заказ",
-    description: "Шкатулка с гравировкой под заказ. зготовим по индивидуальному дизайну.",
+    shortDescription: "Деревянная шкатулка с гравировкой под заказ",
+    description: "Шкатулка с гравировкой под заказ. Изготовим по индивидуальному дизайну.",
     category: "Шкатулки",
     price: 1200,
     stock: 7,
     images: ["/products/shkatulka-01.png"],
-    attributes: { материал: "уб", размер: "120×80×60 мм" },
+    attributes: { материал: "Дуб", размер: "120×80×60 мм" },
     active: true,
   },
   {
     sku: "LZR-000003",
     name: "Табличка",
-    shortDescription: "нтерьерная табличка из дерева",
-    description: "нтерьерная табличка из дерева. одойдёт для кабинета, офиса или дома.",
+    shortDescription: "Интерьерная табличка из дерева",
+    description: "Интерьерная табличка из дерева. Подойдёт для кабинета, офиса или дома.",
     category: "Таблички",
     price: 400,
     stock: 20,
@@ -52,7 +52,7 @@ async function main() {
     console.log(`✅ ${result.sku}: ${result.shortDescription}`);
   }
   console.log("");
-  console.log("🌱 бновление выполнено (upsert)");
+  console.log("🌱 Обновление выполнено (upsert)");
 }
 
 main()
