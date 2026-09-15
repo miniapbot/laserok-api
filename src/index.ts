@@ -1,8 +1,9 @@
-﻿import express from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { productsRouter } from "./routes/products.js";
 import { ordersRouter } from "./routes/orders.js";
+import { adminRouter } from "./routes/admin.js";
 import { errorHandler } from "./middleware/error.js";
 import { prisma } from "./lib/prisma.js";
 
@@ -15,10 +16,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:5174",
       /\.vercel\.app$/,
       /\.max\.ru$/,
     ],
     credentials: true,
+    allowedHeaders: ["Content-Type", "X-Admin-Password"],
   })
 );
 
@@ -35,6 +38,7 @@ app.get("/api/health", async (_req, res) => {
 
 app.use("/api/products", productsRouter);
 app.use("/api/orders", ordersRouter);
+app.use("/api/admin", adminRouter);
 
 app.use((_req, res) => {
   res.status(404).json({ error: "Not found" });
@@ -45,10 +49,11 @@ app.use(errorHandler);
 const server = app.listen(PORT, () => {
   console.log(`✅ API запущен на http://localhost:${PORT}`);
   console.log(`   Health: http://localhost:${PORT}/api/health`);
+  console.log(`   Admin:  http://localhost:${PORT}/api/admin`);
 });
 
 process.on("SIGTERM", async () => {
-  console.log("Останавливаю сервер...");
+  console.log("станавливаю сервер...");
   server.close();
   await prisma.$disconnect();
   process.exit(0);
