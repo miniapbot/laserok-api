@@ -1,3 +1,16 @@
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+
+// Конфигурация Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Multer для приёма файла в память
+const upload = multer({ storage: multer.memoryStorage() });
+
 import { Router } from "express";
 import { prisma } from "../lib/prisma.js";
 import { adminAuth } from "../middleware/admin.js";
@@ -24,6 +37,31 @@ adminRouter.get("/products/:id", async (req, res, next) => {
     });
     if (!product) return res.status(404).json({ error: "Not found" });
     res.json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/admin/upload — загрузка изображения
+adminRouter.post("/upload", upload.single("file"), async (req, res, next) => {
+  try {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    // Загрузка в папку "laserok" в Cloudinary
+    const result = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        { folder: "laserok", resource_type: "image" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      ).end(file.buffer);
+    });
+
+    res.json({ url: result.secure_url });
   } catch (err) {
     next(err);
   }
