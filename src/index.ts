@@ -17,9 +17,9 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      "https://shop.miniapbot.ru",
-      "https://admin.shop.miniapbot.ru",
-      "https://api.shop.miniapbot.ru",
+      "https://shop.laserokey.ru",
+      "https://admin.shop.laserokey.ru",
+      "https://api.shop.laserokey.ru",
       /\.vercel\.app$/,
       /\.max\.ru$/,
     ],
